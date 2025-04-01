@@ -1,20 +1,25 @@
 {
-  "name": "samsmithkruz/redis-client",
-  "description": "A powerful and intuitive Redis client for PHP developers.",
-  "type": "library",
-  "require": {
-    "php": ">=7.4",
-    "ext-redis": "*",           // Ensures the PHP Redis extension is installed
-    "predis/predis": "^2.0"     // Optional: fallback to Predis if ext-redis is unavailable
-  },
-  "autoload": {
-    "psr-4": {
-      "RedisClient\\": ""
-    }
-  },
-  "scripts": {
-    "test": "phpunit"
-  },
-  "minimum-stability": "stable",
-  "prefer-stable": true
+    "name": "samsmithkruz/redis-client-class",
+    "description": "A powerful and intuitive Redis client for PHP developers.",
+    "type": "library",
+    "keywords": ["redis", "php", "client", "redis client", "redis wrapper"],
+    "homepage": "https://github.com/samsmithKruz/redis_client_class",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Benny",
+            "email": "your.email@example.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "RedisClient\\": ""
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
