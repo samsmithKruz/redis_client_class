@@ -1,5 +1,6 @@
 
 # RedisClient - PHP Redis Wrapper  
+![Packagist Downloads](https://img.shields.io/packagist/dt/samsmithkruz/redis-client-class)
 [![GitHub issues](https://img.shields.io/github/issues/samsmithKruz/redis_client_class)](https://github.com/samsmithKruz/redis_client_class/issues)
 [![GitHub forks](https://img.shields.io/github/forks/samsmithKruz/redis_client_class)](https://github.com/samsmithKruz/redis_client_class/network)
 [![GitHub stars](https://img.shields.io/github/stars/samsmithKruz/redis_client_class)](https://github.com/samsmithKruz/redis_client_class/stargazers)
