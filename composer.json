@@ -17,9 +17,10 @@
     },
     "autoload": {
         "psr-4": {
-            "RedisClient\\": ""
+            "RedisClient\\": "src/"
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "version": "1.0.0"
 }
