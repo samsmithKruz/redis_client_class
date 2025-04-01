@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedisClient Documentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Main container -->
+    <div class="flex h-screen">
+
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white shadow-md p-6">
+            <h2 class="text-xl font-bold mb-4">RedisClient Docs</h2>
+            <nav>
+                <ul class="space-y-3">
+                    <li><a href="#introduction" class="text-blue-600">Introduction</a></li>
+                    <li><a href="#installation" class="text-blue-600">Installation</a></li>
+                    <li><a href="#usage" class="text-blue-600">Usage</a></li>
+                    <li><a href="#commands" class="text-blue-600">Commands</a></li>
+                    <li><a href="#examples" class="text-blue-600">Examples</a></li>
+                    <li><a href="#faq" class="text-blue-600">FAQ</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-10">
+            <section id="introduction">
+    <h1 class="text-3xl font-bold mb-4">RedisClient - PHP Redis Wrapper</h1>
+    <p class="text-gray-700">
+        RedisClient is a lightweight and developer-friendly PHP wrapper for Redis, designed to simplify 
+        interactions with Redis databases while providing full support for all Redis commands.
+    </p>
+
+    <p class="text-gray-700 mt-4">
+        With RedisClient, developers can perform key-value storage operations, manage lists, sets, hashes, 
+        transactions, and even work with real-time messaging through Redis' publish-subscribe (Pub/Sub) 
+        system, all with an intuitive and easy-to-use interface.
+    </p>
+
+    <p class="text-gray-700 mt-4">
+        Whether you're building a high-performance API, caching system, or real-time analytics, RedisClient 
+        ensures seamless integration with PHP applications, offering a robust and efficient solution for 
+        handling large-scale data operations.
+    </p>
+</section>
+
+
+            <section id="installation" class="mt-10">
+    <h2 class="text-2xl font-semibold">Installation</h2>
+
+    <p class="text-gray-700">
+        To use <strong>RedisClient</strong>, ensure that Redis is installed on your system and that the 
+        PHP Redis extension is enabled.
+    </p>
+
+    <!-- Installing Redis -->
+    <h3 class="text-xl font-semibold mt-6">1. Installing Redis</h3>
+
+    <h4 class="text-lg font-medium mt-4">Windows</h4>
+    <p class="text-gray-700">
+        Download and install Redis for Windows from <a href="https://github.com/microsoftarchive/redis/releases" 
+        class="text-blue-600">Microsoft Redis Releases</a>. 
+        After installation, start the Redis server using:
+    </p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">redis-server</pre>
+
+    <h4 class="text-lg font-medium mt-4">Linux (Debian/Ubuntu)</h4>
+    <p class="text-gray-700">
+        Install Redis using:
+    </p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">sudo apt update && sudo apt install redis-server</pre>
+    <p class="text-gray-700">Start Redis with:</p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">sudo systemctl start redis</pre>
+
+    <h4 class="text-lg font-medium mt-4">MacOS</h4>
+    <p class="text-gray-700">Install Redis via Homebrew:</p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">brew install redis</pre>
+    <p class="text-gray-700">Start Redis with:</p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">brew services start redis</pre>
+
+    <!-- Installing PHP Redis Extension -->
+    <h3 class="text-xl font-semibold mt-6">2. Installing the PHP Redis Extension</h3>
+
+    <p class="text-gray-700">Ensure you have the PHP Redis extension installed. Use the following command:</p>
+
+    <h4 class="text-lg font-medium mt-4">For Linux/MacOS (Using PECL)</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">sudo pecl install redis</pre>
+    <p class="text-gray-700">Then add the extension to your PHP configuration:</p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">echo "extension=redis.so" >> $(php -i | grep -o '/.*php.ini')</pre>
+
+    <h4 class="text-lg font-medium mt-4">For Windows</h4>
+    <p class="text-gray-700">
+        Download the appropriate <a href="https://pecl.php.net/package/redis" class="text-blue-600">Redis 
+        extension DLL</a>, move it to your PHP `ext` directory, and enable it in `php.ini` by adding:
+    </p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">extension=php_redis.dll</pre>
+
+    <!-- Installing RedisClient -->
+    <h3 class="text-xl font-semibold mt-6">3. Installing RedisClient</h3>
+    <p class="text-gray-700">To install RedisClient, simply include it in your project:</p>
+
+    <h4 class="text-lg font-medium mt-4">Using Composer</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">composer require your-namespace/redisclient</pre>
+
+    <h4 class="text-lg font-medium mt-4">Manual Installation</h4>
+    <p class="text-gray-700">Download the RedisClient class and include it in your project:</p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">&lt;?php
+require 'path/to/RedisClient.php';
+$redis = new RedisClient();
+?&gt;</pre>
+
+    <p class="text-gray-700 mt-6">RedisClient is now ready to use!</p>
+</section>
+
+
+            <section id="usage" class="mt-10">
+    <h2 class="text-2xl font-semibold">Usage</h2>
+    <p class="text-gray-700">Learn how to use <strong>RedisClient</strong> in your projects with simple and advanced operations.</p>
+
+    <!-- Initializing RedisClient -->
+    <h3 class="text-xl font-semibold mt-6">1. Initializing RedisClient</h3>
+    <p class="text-gray-700">First, create an instance of RedisClient:</p>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+&lt;?php
+require 'RedisClient.php';
+
+$redis = new RedisClient();
+?&gt;
+    </pre>
+
+    <!-- Basic CRUD Operations -->
+    <h3 class="text-xl font-semibold mt-6">2. Basic CRUD Operations</h3>
+
+    <h4 class="text-lg font-medium mt-4">Insert a Key-Value Pair</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->insert('username', 'john_doe');
+    </pre>
+
+    <h4 class="text-lg font-medium mt-4">Retrieve a Value</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$username = $redis->select('username');
+echo $username; // Output: john_doe
+    </pre>
+
+    <h4 class="text-lg font-medium mt-4">Update a Value</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->update('username', 'jane_doe');
+    </pre>
+
+    <h4 class="text-lg font-medium mt-4">Delete a Key</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->delete('username');
+    </pre>
+
+    <!-- Increment and Decrement -->
+    <h3 class="text-xl font-semibold mt-6">3. Increment & Decrement</h3>
+
+    <h4 class="text-lg font-medium mt-4">Increment a Counter</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->insert('counter', 1);
+$redis->increment('counter');
+echo $redis->select('counter'); // Output: 2
+    </pre>
+
+    <h4 class="text-lg font-medium mt-4">Decrement a Counter</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->decrement('counter');
+echo $redis->select('counter'); // Output: 1
+    </pre>
+
+    <!-- List Operations -->
+    <h3 class="text-xl font-semibold mt-6">4. Working with Lists</h3>
+
+    <h4 class="text-lg font-medium mt-4">Push & Pop Elements</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->push('users', 'Alice');
+$redis->push('users', 'Bob');
+echo $redis->pop('users'); // Output: Alice
+    </pre>
+
+    <!-- Hash Operations -->
+    <h3 class="text-xl font-semibold mt-6">5. Hash Operations</h3>
+
+    <h4 class="text-lg font-medium mt-4">Insert and Retrieve Hash Fields</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->hash_insert('user:1', 'name', 'John');
+echo $redis->hash_select('user:1', 'name'); // Output: John
+    </pre>
+
+    <h4 class="text-lg font-medium mt-4">Retrieve All Hash Fields</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+print_r($redis->hash_select_all('user:1'));
+    </pre>
+
+    <!-- Sets Operations -->
+    <h3 class="text-xl font-semibold mt-6">6. Working with Sets</h3>
+
+    <h4 class="text-lg font-medium mt-4">Add and Retrieve Set Members</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->set_add('admins', 'alice');
+$redis->set_add('admins', 'bob');
+print_r($redis->set_members('admins'));
+    </pre>
+
+    <!-- Sorted Sets Operations -->
+    <h3 class="text-xl font-semibold mt-6">7. Working with Sorted Sets</h3>
+
+    <h4 class="text-lg font-medium mt-4">Add and Retrieve Sorted Members</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->zadd('leaderboard', 100, 'Alice');
+$redis->zadd('leaderboard', 150, 'Bob');
+print_r($redis->zrange('leaderboard', 0, -1, true)); // Sorted by score
+    </pre>
+
+    <!-- Transactions -->
+    <h3 class="text-xl font-semibold mt-6">8. Executing Transactions</h3>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->transaction(function($r) {
+    $r->insert('key1', 'value1');
+    $r->insert('key2', 'value2');
+});
+    </pre>
+
+    <!-- Expiration & TTL -->
+    <h3 class="text-xl font-semibold mt-6">9. Setting Expiry & TTL</h3>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->insert('temp', 'data');
+$redis->set_expiration('temp', 30); // Expires in 30 seconds
+echo $redis->get_ttl('temp');
+    </pre>
+
+    <!-- Pub/Sub -->
+    <h3 class="text-xl font-semibold mt-6">10. Publish/Subscribe</h3>
+
+    <h4 class="text-lg font-medium mt-4">Publishing a Message</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->publish('news', 'Breaking News: Redis is awesome!');
+    </pre>
+
+    <h4 class="text-lg font-medium mt-4">Subscribing to a Channel</h4>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->subscribe('news', function ($channel, $message) {
+    echo "Received on $channel: $message";
+});
+    </pre>
+
+    <!-- Flushing and Cleanup -->
+    <h3 class="text-xl font-semibold mt-6">11. Flushing & Cleanup</h3>
+    <pre class="bg-gray-200 p-3 mt-2 rounded">
+$redis->flush(); // Clears all Redis data
+$redis->close(); // Closes the connection
+    </pre>
+
+    <p class="text-gray-700 mt-6">
+        This covers all the major Redis operations available in <strong>RedisClient</strong>.
+    </p>
+</section>
+
+
+            <section id="commands" class="mt-10">
+    <h2 class="text-2xl font-semibold">Commands</h2>
+    <p class="text-gray-700">Detailed command list for RedisClient.</p>
+
+    <h3 class="text-xl font-semibold mt-6">1. Key Operations</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>insert(key, value)</strong> - Set a key with a value.</li>
+        <li><strong>select(key)</strong> - Get the value of a key.</li>
+        <li><strong>update(key, value)</strong> - Update the value of an existing key.</li>
+        <li><strong>delete(key)</strong> - Remove a key.</li>
+        <li><strong>exists(key)</strong> - Check if a key exists.</li>
+        <li><strong>rename(oldKey, newKey)</strong> - Rename a key.</li>
+        <li><strong>set_expiration(key, seconds)</strong> - Set expiration for a key.</li>
+        <li><strong>get_ttl(key)</strong> - Get the time-to-live (TTL) of a key.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">2. String Operations</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>append(key, value)</strong> - Append a value to a key.</li>
+        <li><strong>get_range(key, start, end)</strong> - Get a substring of a string key.</li>
+        <li><strong>strlen(key)</strong> - Get the length of a string key.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">3. Increment & Decrement</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>increment(key, amount = 1)</strong> - Increment a key’s value.</li>
+        <li><strong>decrement(key, amount = 1)</strong> - Decrement a key’s value.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">4. List Operations</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>push(key, value)</strong> - Push an element to a list.</li>
+        <li><strong>pop(key)</strong> - Pop an element from a list.</li>
+        <li><strong>lrange(key, start, stop)</strong> - Get elements from a list.</li>
+        <li><strong>llen(key)</strong> - Get the length of a list.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">5. Hash Operations</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>hash_insert(hash, field, value)</strong> - Insert a value into a hash field.</li>
+        <li><strong>hash_select(hash, field)</strong> - Get a value from a hash.</li>
+        <li><strong>hash_select_all(hash)</strong> - Get all fields and values from a hash.</li>
+        <li><strong>hash_delete(hash, field)</strong> - Delete a field from a hash.</li>
+        <li><strong>hash_exists(hash, field)</strong> - Check if a hash field exists.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">6. Set Operations</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>set_add(key, value)</strong> - Add a member to a set.</li>
+        <li><strong>set_members(key)</strong> - Get all members of a set.</li>
+        <li><strong>set_remove(key, value)</strong> - Remove a member from a set.</li>
+        <li><strong>set_exists(key, value)</strong> - Check if a value exists in a set.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">7. Sorted Set Operations</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>zadd(key, score, value)</strong> - Add a member with a score to a sorted set.</li>
+        <li><strong>zrange(key, start, stop, withScores = false)</strong> - Get members in a score range.</li>
+        <li><strong>zrem(key, value)</strong> - Remove a member from a sorted set.</li>
+        <li><strong>zcount(key, min, max)</strong> - Count members within a score range.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">8. Transactions</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>transaction(callback)</strong> - Execute multiple commands in a transaction.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">9. Publish/Subscribe (Pub/Sub)</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>publish(channel, message)</strong> - Publish a message to a channel.</li>
+        <li><strong>subscribe(channel, callback)</strong> - Subscribe to a channel.</li>
+    </ul>
+
+    <h3 class="text-xl font-semibold mt-6">10. Server & Maintenance Commands</h3>
+    <ul class="list-disc pl-6 text-gray-700">
+        <li><strong>flush()</strong> - Clear all data from Redis.</li>
+        <li><strong>ping()</strong> - Check if the Redis server is responsive.</li>
+        <li><strong>close()</strong> - Close the Redis connection.</li>
+    </ul>
+
+    <p class="text-gray-700 mt-6">
+        This list covers all supported Redis commands in <strong>RedisClient</strong>.
+    </p>
+</section>
+
+
+            <section id="examples" class="mt-10">
+    <h2 class="text-2xl font-semibold">Examples</h2>
+    <p class="text-gray-700">Code examples demonstrating RedisClient functionality.</p>
+
+    <h3 class="text-xl font-semibold mt-6">1. Connecting to Redis</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        require 'RedisClient.php';
+
+        // Initialize RedisClient
+        $redis = new RedisClient('127.0.0.1', 6379);
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">2. Setting and Getting Data</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        // Store a value
+        $redis->insert('username', 'john_doe');
+
+        // Retrieve a value
+        echo $redis->select('username'); // Output: john_doe
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">3. Working with Lists</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        // Push elements into a list
+        $redis->push('users', 'Alice');
+        $redis->push('users', 'Bob');
+
+        // Retrieve list elements
+        print_r($redis->lrange('users', 0, -1)); // Output: ['Alice', 'Bob']
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">4. Hashes - Storing Objects</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        // Insert user data into a hash
+        $redis->hash_insert('user:1001', 'name', 'Alice');
+        $redis->hash_insert('user:1001', 'age', '25');
+
+        // Retrieve a field value
+        echo $redis->hash_select('user:1001', 'name'); // Output: Alice
+
+        // Retrieve all fields
+        print_r($redis->hash_select_all('user:1001')); 
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">5. Using Sets</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        // Add values to a set
+        $redis->set_add('fruits', 'apple');
+        $redis->set_add('fruits', 'banana');
+
+        // Get all set members
+        print_r($redis->set_members('fruits')); // Output: ['apple', 'banana']
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">6. Sorted Sets (Leaderboard Example)</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        // Add scores to a sorted set
+        $redis->zadd('leaderboard', 100, 'Player1');
+        $redis->zadd('leaderboard', 150, 'Player2');
+
+        // Get top players
+        print_r($redis->zrange('leaderboard', 0, -1, true));
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">7. Transactions</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        $redis->transaction(function($tx) {
+            $tx->insert('balance', 100);
+            $tx->increment('balance', 50);
+        });
+
+        echo $redis->select('balance'); // Output: 150
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">8. Publish/Subscribe</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        // Publish a message
+        $redis->publish('news_channel', 'Breaking News!');
+
+        // Subscribe to a channel (example inside a loop)
+        $redis->subscribe('news_channel', function($channel, $message) {
+            echo "Received on $channel: $message";
+        });
+        </code>
+    </pre>
+
+    <h3 class="text-xl font-semibold mt-6">9. Clearing Redis</h3>
+    <pre class="bg-gray-800 text-white p-4 rounded">
+        <code>
+        // Delete a single key
+        $redis->delete('username');
+
+        // Flush the entire database
+        $redis->flush();
+        </code>
+    </pre>
+
+</section>
+
+
+            <section id="faq" class="mt-10">
+    <h2 class="text-2xl font-semibold">FAQ</h2>
+    <p class="text-gray-700">Frequently asked questions about RedisClient.</p>
+
+    <!-- Accordion Start -->
+    <div class="mt-6 space-y-4">
+
+        <!-- Accordion Item 1 -->
+        <div>
+            <input type="checkbox" id="faq1" class="hidden" />
+            <label for="faq1" class="w-full text-left p-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
+                <h3 class="text-xl font-semibold">1. How can I install RedisClient?</h3>
+            </label>
+            <div class="px-4 pb-4 text-gray-700 bg-gray-50 hidden max-h-0 overflow-hidden transition-all duration-300" id="faq1-content">
+                <p>You can install RedisClient by downloading the repository from GitHub or using Composer to install it directly into your PHP project. Please refer to the <a href="#installation" class="text-blue-500 hover:underline">Installation section</a> for detailed instructions.</p>
+            </div>
+        </div>
+
+        <!-- Accordion Item 2 -->
+        <div>
+            <input type="checkbox" id="faq2" class="hidden" />
+            <label for="faq2" class="w-full text-left p-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
+                <h3 class="text-xl font-semibold">2. Does RedisClient support Redis' full feature set?</h3>
+            </label>
+            <div class="px-4 pb-4 text-gray-700 bg-gray-50 hidden max-h-0 overflow-hidden transition-all duration-300" id="faq2-content">
+                <p>Yes, RedisClient supports a wide range of Redis commands including key-value operations, lists, sets, hashes, sorted sets, transactions, and more. Refer to the <a href="#commands" class="text-blue-500 hover:underline">Commands section</a> for the full list.</p>
+            </div>
+        </div>
+
+        <!-- Accordion Item 3 -->
+        <div>
+            <input type="checkbox" id="faq3" class="hidden" />
+            <label for="faq3" class="w-full text-left p-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
+                <h3 class="text-xl font-semibold">3. How do I report issues or request features?</h3>
+            </label>
+            <div class="px-4 pb-4 text-gray-700 bg-gray-50 hidden max-h-0 overflow-hidden transition-all duration-300" id="faq3-content">
+                <p>If you encounter any issues or have feature requests, feel free to open an issue on the GitHub repository. I'll do my best to respond promptly. You can visit the GitHub repository here: <a href="https://github.com/samsmithkruz/RedisClient" class="text-blue-500 hover:underline">https://github.com/samsmithkruz/RedisClient</a></p>
+            </div>
+        </div>
+
+        <!-- Accordion Item 4 -->
+        <div>
+            <input type="checkbox" id="faq4" class="hidden" />
+            <label for="faq4" class="w-full text-left p-4 bg-gray-100 rounded-lg cursor-pointer hover:bg-gray-200">
+                <h3 class="text-xl font-semibold">4. Is there documentation available?</h3>
+            </label>
+            <div class="px-4 pb-4 text-gray-700 bg-gray-50 hidden max-h-0 overflow-hidden transition-all duration-300" id="faq4-content">
+                <p>Yes, this page is the full documentation for RedisClient. You can refer to the sections on <a href="#usage" class="text-blue-500 hover:underline">usage</a>, <a href="#commands" class="text-blue-500 hover:underline">commands</a>, <a href="#examples" class="text-blue-500 hover:underline">examples</a>, and more.</p>
+            </div>
+        </div>
+
+    </div>
+    <!-- Accordion End -->
+</section>
+
+        </main>
+
+    </div>
+
+</body>
+</html>
