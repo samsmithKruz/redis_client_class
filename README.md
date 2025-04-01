@@ -17,7 +17,7 @@ RedisClient is a **developer-friendly PHP class** that provides a **clean and in
 Clone the repository:  
 
 ```sh
-git clone https://github.com/your-username/redis-client.git
+git clone https://github.com/samsmithKruz/redis_client_class.git
 cd redis-client
 ```
 
