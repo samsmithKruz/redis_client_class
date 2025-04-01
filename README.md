@@ -1,5 +1,9 @@
 
 # RedisClient - PHP Redis Wrapper  
+[![GitHub issues](https://img.shields.io/github/issues/samsmithKruz/redis_client_class)](https://github.com/samsmithKruz/redis_client_class/issues)
+[![GitHub forks](https://img.shields.io/github/forks/samsmithKruz/redis_client_class)](https://github.com/samsmithKruz/redis_client_class/network)
+[![GitHub stars](https://img.shields.io/github/stars/samsmithKruz/redis_client_class)](https://github.com/samsmithKruz/redis_client_class/stargazers)
+
 
 RedisClient is a **developer-friendly PHP class** that provides a **clean and intuitive API** for working with Redis. It covers **all major Redis operations**, including:  
 
