@@ -1,0 +1,20 @@
+{
+  "name": "samsmithkruz/redis-client",
+  "description": "A powerful and intuitive Redis client for PHP developers.",
+  "type": "library",
+  "require": {
+    "php": ">=7.4",
+    "ext-redis": "*",           // Ensures the PHP Redis extension is installed
+    "predis/predis": "^2.0"     // Optional: fallback to Predis if ext-redis is unavailable
+  },
+  "autoload": {
+    "psr-4": {
+      "RedisClient\\": ""
+    }
+  },
+  "scripts": {
+    "test": "phpunit"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
