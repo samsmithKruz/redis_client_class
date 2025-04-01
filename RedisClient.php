@@ -14,7 +14,7 @@ class RedisClient
      */
     public function __construct($host = '127.0.0.1', $port = 6379, $timeout = 0.0)
     {
-        $this->redis = new Redis();
+        $this->redis = new \Redis();
         if (!$this->redis->connect($host, $port, $timeout)) {
             throw new Exception("Failed to connect to Redis server at $host:$port");
         }
